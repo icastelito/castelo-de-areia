@@ -44,7 +44,7 @@
 }
 
 .post-type {
-  color: white;
+  color: var(--text-primary);
   padding: 0.5rem 1rem;
   border-radius: 25px;
   font-size: 0.9rem;
