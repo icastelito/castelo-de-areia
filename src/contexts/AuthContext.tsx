@@ -8,7 +8,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Credenciais simples (em produção, isso deveria ser mais seguro)
+// Credenciais simples para exemplificação e apresentação
 const ADMIN_CREDENTIALS = {
   username: 'admin',
   password: 'castelo123'

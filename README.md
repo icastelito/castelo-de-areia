@@ -1,235 +1,535 @@
-# Castelo de Areia 🏰
+# 🏰 Castelo de Areia
 
-Um blog pessoal elegante e moderno para compartilhar poesias, contos, músicas e reflexões, com uma área administrativa completa para gerenciamento de conteúdo.
+
+Um blog pessoal para compartilhar poesias, contos, músicas e reflexões, construído com React e TypeScript. Apresenta um design futurístico inspirado no estilo Y2K e uma área administrativa completa para gerenciamento de conteúdo.
+
+![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=for-the-badge&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-7.1.2-646CFF?style=for-the-badge&logo=vite)
+![React Router](https://img.shields.io/badge/React_Router-7.8.0-CA4245?style=for-the-badge&logo=react-router)
 
 ## ✨ Funcionalidades
 
-### 🌟 Área Pública
-- **Página inicial** com listagem de todos os posts
-- **Visualização de posts** em páginas individuais  
-- **Sistema de busca** por título, conteúdo, tags ou autor
-- **Filtros por tipo** (poemas, contos, músicas, pensamentos, filosofia)
-- **Design responsivo** com tema Y2K futurista
-- **Componente especial** para renderização de poemas
-- **Navegação por páginas** (ao invés de SPA)
+### 🌟 **Área Pública**
+- **📚 Página inicial** com listagem completa de posts
+- **📄 Visualização individual** de posts em páginas dedicadas
+- **🔍 Sistema de busca** avançado (título, conteúdo, tags, autor)
+- **🏷️ Filtros por tipo** (poemas, contos, músicas, pensamentos, filosofia)
+- **📱 Design responsivo** com tema Y2K futurista
+- **✨ Efeitos visuais** com partículas flutuantes animadas
+- **🎨 Renderizador especial** para poemas e diferentes tipos de conteúdo
 
-### 🔐 Área Administrativa
-- **Sistema de autenticação** com usuário e senha
-- **Dashboard administrativo** com estatísticas
-- **CRUD completo** para posts (Criar, Ler, Atualizar, Deletar)
-- **Editor avançado** com campos específicos por tipo de post
-- **Sistema de tags** dinâmico
-- **Metadados automáticos** (contagem de versos, palavras, etc.)
-- **Backup e restauração** via export/import JSON
-- **Armazenamento local** através de localStorage
+### 🔐 **Área Administrativa**
+- **🛡️ Sistema de autenticação** seguro
+- **📊 Dashboard** com estatísticas em tempo real
+- **📝 CRUD completo** para posts (Criar, Ler, Atualizar, Deletar)
+- **📑 Editor avançado** com campos específicos por tipo de post
+- **🏷️ Sistema de tags** dinâmico e autocomplete
+- **📈 Metadados automáticos** (contagem de versos, palavras, estrofes, etc.)
+- **💾 Backup e restauração** via export/import JSON
+- **🗄️ Armazenamento híbrido** (localStorage + JSON fallback)
 
-### 🎨 Design e UX
-- **Tema Y2K** com elementos neon e glass morphism
-- **Animações fluidas** e efeitos visuais
-- **Elementos flutuantes** decorativos
-- **Responsivo** para desktop, tablet e mobile
-- **Tipografia elegante** com fontes personalizadas
+### 🎨 **Design e UX**
+- **🌈 Tema Y2K** com cores neon e glass morphism
+- **⚡ Animações fluidas** e transições suaves
+- **🎆 Partículas flutuantes** com cores dinâmicas
+- **🌓 Modo escuro/claro** com alternância instantânea
+- **📱 Totalmente responsivo** (desktop, tablet, mobile)
+- **🎭 Tipografia elegante** com hierarquia visual clara
+- **👻 Scrollbars invisíveis** para experiência imersiva
 
-## 🚀 Tecnologias Utilizadas
+## 🚀 Tecnologias e Arquitetura
 
-- **React 19.1.1** - Framework principal
-- **TypeScript** - Tipagem estática
-- **React Router DOM** - Navegação e roteamento
-- **Vite** - Build tool e desenvolvimento
-- **CSS3** - Estilização com CSS Variables e Flexbox/Grid
-- **localStorage** - Persistência de dados local
+### **🔧 Core Technologies**
+- **React 19.1.1** - Framework principal com Strict Mode
+- **TypeScript 5.8.3** - Tipagem estática e desenvolvimento type-safe
+- **React Router DOM 7.8.0** - Roteamento e navegação SPA
+- **Vite 7.1.2** - Build tool ultra-rápido e HMR
+- **React Icons 5.5.0** - Biblioteca de ícones SVG
+
+### **🏗️ Arquitetura**
+- **Padrão de composição** com componentes reutilizáveis
+- **Context API** para gerenciamento de estado global
+- **Custom Hooks** para lógica de negócio
+- **Singleton Pattern** para serviços
+- **CSS Modules** e CSS Variables para temas
+- **Type-safe** em toda a aplicação
+
+### **💾 Persistência de Dados**
+- **LocalStorage** como storage primário
+- **JSON File** como fallback e dados iniciais
+- **Sistema híbrido** para máxima flexibilidade
+- **Export/Import** para backup e migração
 
 ## 📁 Estrutura do Projeto
 
 ```
-src/
-├── components/
-│   ├── auth/
-│   │   └── ProtectedRoute.tsx      # Proteção de rotas administrativas
-│   ├── layout/
-│   │   ├── Header.tsx              # Cabeçalho com navegação
-│   │   ├── Header.css
-│   │   └── Layout.tsx              # Layout principal
-│   ├── posts/
-│   │   ├── PostCard.tsx            # Card de post para listagem
-│   │   ├── PostCard.css
-│   │   ├── PoemRenderer.tsx        # Renderizador especial para poemas
-│   │   └── PoemRenderer.css
-│   └── ui/
-│       ├── FloatingElements.tsx    # Elementos decorativos
-│       └── FloatingElements.css
-├── contexts/
-│   ├── AuthContext.tsx             # Contexto de autenticação
-│   └── ThemeContext.tsx            # Contexto de tema
-├── hooks/
-│   └── usePosts.ts                 # Hook para gerenciar posts
-├── pages/
-│   ├── HomePage.tsx                # Página inicial pública
-│   ├── HomePage.css
-│   ├── PostPage.tsx                # Página de visualização de post
-│   ├── PostPage.css
-│   ├── AdminLoginPage.tsx          # Login administrativo
-│   ├── AdminLoginPage.css
-│   ├── AdminDashboard.tsx          # Dashboard administrativo
-│   ├── AdminDashboard.css
-│   ├── AdminPostForm.tsx           # Formulário de posts
-│   ├── AdminPostForm.css
-│   ├── NotFoundPage.tsx            # Página 404
-│   └── NotFoundPage.css
-├── services/
-│   └── PostService.ts              # Serviço de gerenciamento de posts
-├── styles/
-│   └── y2k-theme.css              # Tema principal Y2K
-├── types/
-│   └── Post.ts                     # Tipos TypeScript
-└── data/
-    └── posts.ts                    # Dados iniciais (legacy)
+📦 castelo-de-areia/
+├── 📄 index.html                    # HTML principal com favicon customizado
+├── 📄 vite.config.ts               # Configuração do Vite
+├── 📄 tsconfig.json                # Configuração TypeScript
+├── 📄 package.json                 # Dependências e scripts
+├── 🏰 castle-favicon.svg           # Favicon personalizado
+├── 📁 public/
+│   ├── 📄 posts.json              # Dados iniciais dos posts
+│   └── 🖼️ vite.svg                # Logo do Vite
+└── 📁 src/
+    ├── 📄 main.tsx                # Entry point da aplicação
+    ├── 📄 App.tsx                 # Componente raiz com roteamento
+    ├── 📄 App.css                 # Estilos globais da aplicação
+    ├── 📄 index.css               # Reset CSS e estilos base
+    ├── 📄 vite-env.d.ts           # Tipos do Vite
+    ├── 📁 components/             # Componentes reutilizáveis
+    │   ├── 📁 auth/
+    │   │   └── 🛡️ ProtectedRoute.tsx     # HOC para rotas protegidas
+    │   ├── 📁 layout/
+    │   │   ├── 📄 Header.tsx             # Cabeçalho com navegação dinâmica
+    │   │   ├── 🎨 Header.css             # Estilos do header
+    │   │   └── 📄 Layout.tsx             # Layout principal da aplicação
+    │   ├── 📁 posts/
+    │   │   ├── 📄 PostCard.tsx           # Card para listagem de posts
+    │   │   ├── 🎨 PostCard.css           # Estilos do card
+    │   │   ├── 📄 PoemRenderer.tsx       # Renderizador especial para poemas
+    │   │   └── 🎨 PoemRenderer.css       # Estilos do renderizador
+    │   └── 📁 ui/
+    │       ├── ✨ FloatingElements.tsx   # Partículas flutuantes animadas
+    │       └── 🎨 FloatingElements.css   # Animações das partículas
+    ├── 📁 contexts/
+    │   ├── 🔐 AuthContext.tsx            # Context de autenticação
+    │   └── 🌓 ThemeContext.tsx           # Context de tema (dark/light)
+    ├── 📁 hooks/
+    │   └── 📝 usePosts.ts                # Hook customizado para CRUD de posts
+    ├── 📁 pages/
+    │   ├── 🏠 HomePage.tsx               # Página inicial pública
+    │   ├── 🎨 HomePage.css               # Estilos da página inicial
+    │   ├── 📄 PostPage.tsx               # Página de visualização de post
+    │   ├── 🎨 PostPage.css               # Estilos da página de post
+    │   ├── 🔐 AdminLoginPage.tsx         # Página de login administrativo
+    │   ├── 🎨 AdminLoginPage.css         # Estilos da página de login
+    │   ├── 📊 AdminDashboard.tsx         # Dashboard administrativo
+    │   ├── 🎨 AdminDashboard.css         # Estilos do dashboard
+    │   ├── 📝 AdminPostForm.tsx          # Formulário de criação/edição
+    │   ├── 🎨 AdminPostForm.css          # Estilos do formulário
+    │   ├── ❌ NotFoundPage.tsx           # Página 404
+    │   └── 🎨 NotFoundPage.css           # Estilos da página 404
+    ├── 📁 services/
+    │   └── 🔧 PostService.ts             # Serviço completo de CRUD
+    ├── 📁 styles/
+    │   └── 🌈 y2k-theme.css              # Tema Y2K com variáveis CSS
+    ├── 📁 types/
+    │   └── 📝 Post.ts                    # Tipos TypeScript para posts
+    ├── 📁 data/
+    │   └── 📄 posts.ts                   # Dados legacy (não usado)
+    └── 📁 assets/
+        └── 🖼️ react.svg                  # Logo do React
 ```
 
-## 🔧 Instalação e Execução
+## 🛠️ Instalação e Execução
+
+### **📋 Pré-requisitos**
+- Node.js 18+ 
+- npm ou yarn
+- Git
+
+### **🚀 Instalação**
 
 1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/icastelito/castelo-de-areia.git
-   cd castelo-de-areia
-   ```
+```bash
+git clone https://github.com/icastelito/castelo-de-areia.git
+cd castelo-de-areia
+```
 
 2. **Instale as dependências:**
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 3. **Execute o servidor de desenvolvimento:**
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
-4. **Acesse o aplicativo:**
-   - Área pública: `http://localhost:5173`
-   - Área administrativa: `http://localhost:5173/admin/login`
+4. **Acesse a aplicação:**
+   - 🌐 **Área pública:** `http://localhost:5173`
+   - 🔐 **Login administrativo:** `http://localhost:5173/admin/login`
 
-## 🔐 Credenciais Administrativas
+### **📜 Scripts Disponíveis**
 
-Para acessar a área administrativa, use:
-- **Usuário:** `admin`
-- **Senha:** `castelo123`
+```bash
+# Desenvolvimento com hot reload
+npm run dev
 
-> ⚠️ **Importante:** Em produção, altere essas credenciais no arquivo `src/contexts/AuthContext.tsx`
+# Build para produção
+npm run build
+
+# Preview da build de produção
+npm run preview
+
+# Linting do código
+npm run lint
+```
+
+## 🔐 Acesso Administrativo
+
+### **🗝️ Credenciais de Acesso**
+- **👤 Usuário:** `admin`
+- **🔒 Senha:** `castelo123`
+
+### **⚠️ Segurança**
+> **Importante:** Em ambiente de produção, altere as credenciais no arquivo `src/contexts/AuthContext.tsx`
+
+### **🛡️ Funcionalidades Administrativas**
+- Dashboard com estatísticas em tempo real
+- Gerenciamento completo de posts (CRUD)
+- Sistema de backup/restore
+- Interface intuitiva e responsiva
 
 ## 📝 Como Usar
 
-### Criando um Novo Post
+### **✍️ Criando um Novo Post**
 
-1. Acesse a área administrativa (`/admin/login`)
-2. Faça login com as credenciais
-3. No dashboard, clique em "✨ Criar Novo Post"
-4. Preencha os campos:
-   - **Título:** Nome do post
-   - **Tipo:** Escolha entre poema, conto, música, pensamento ou filosofia
-   - **Conteúdo:** Texto principal do post
-   - **Tags:** Palavras-chave para categorização
-   - **Metadados:** Informações específicas do tipo (versos, palavras, BPM, etc.)
+1. **Acesse a área administrativa:** `/admin/login`
+2. **Faça login** com as credenciais fornecidas
+3. **No dashboard,** clique em "✨ Criar Novo Post"
+4. **Preencha os campos:**
+   - **📌 Título:** Nome descritivo do post
+   - **🏷️ Tipo:** Escolha entre poema, conto, música, pensamento ou filosofia
+   - **📝 Conteúdo:** Texto principal (suporte a quebras de linha)
+   - **🏷️ Tags:** Palavras-chave separadas por vírgula
+   - **👤 Autor:** Nome do autor (padrão: "Icaro Castelo")
+   - **📊 Metadados:** Informações específicas do tipo selecionado
 
-### Editando Posts
+### **✏️ Editando Posts Existentes**
 
-1. No dashboard administrativo, clique no ícone de edição (✏️) do post desejado
-2. Modifique os campos necessários
-3. Clique em "Atualizar"
+1. **No dashboard administrativo,** localize o post na tabela
+2. **Clique no ícone de edição** (✏️) 
+3. **Modifique** os campos necessários
+4. **Salve** as alterações
 
-### Fazendo Backup
+### **🗑️ Removendo Posts**
 
-1. No dashboard, clique em "📥 Exportar Posts"
-2. Um arquivo JSON será baixado com todos os posts
-3. Para restaurar, use "📤 Importar Posts" e cole o conteúdo do JSON
+1. **No dashboard,** clique no ícone de lixeira (🗑️)
+2. **Confirme** a exclusão no modal
+3. **⚠️ Atenção:** Esta ação não pode ser desfeita
+
+### **💾 Backup e Restore**
+
+#### **📥 Exportando Posts (Backup)**
+1. **No dashboard,** clique em "📥 Exportar Posts"
+2. **Um arquivo JSON** será baixado automaticamente
+3. **Nome do arquivo:** `posts-backup-YYYY-MM-DD.json`
+
+#### **📤 Importando Posts (Restore)**
+1. **No dashboard,** clique em "📤 Importar Posts"
+2. **Cole o conteúdo JSON** na área de texto
+3. **Clique em "Importar"** para restaurar os dados
+4. **⚠️ Importante:** Isso substituirá todos os posts existentes
 
 ## 🎨 Personalização
 
-### Alterando o Tema
+### **🌈 Customizando o Tema**
 
-O tema pode ser customizado editando as variáveis CSS em `src/styles/y2k-theme.css`:
+O tema pode ser personalizado editando as variáveis CSS em `src/styles/y2k-theme.css`:
 
 ```css
 :root {
+  /* Cores principais do tema */
   --neon-pink: #ff1493;
   --neon-cyan: #00bfff;
   --neon-green: #39ff14;
   --neon-purple: #8a2be2;
-  /* ... outras variáveis */
+  --neon-red: #ff4757;
+  
+  /* Gradientes Y2K */
+  --accent-primary: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+  --accent-secondary: linear-gradient(45deg, #06ffa5, #00d4ff, #ff006e);
+  
+  /* Efeitos glass morphism */
+  --bg-glass: rgba(255, 255, 255, 0.25);
+  --backdrop-blur: blur(20px);
 }
 ```
 
-### Adicionando Novos Tipos de Post
+### **✨ Configurando Partículas Flutuantes**
 
-1. Atualize o tipo `PostType` em `src/types/Post.ts`
-2. Adicione o novo tipo nos formulários e filtros
-3. Crie renderizadores específicos se necessário
+Ajuste as partículas em `src/components/ui/FloatingElements.tsx`:
 
-## 🚀 Build para Produção
+```typescript
+// Número de partículas
+const particleCount = 15;
+
+// Variação de tamanhos (em pixels)
+const minSize = 3;
+const maxSize = 13;
+
+// Cores das partículas
+const colors = [
+  'var(--neon-pink)',
+  'var(--neon-cyan)',
+  // ... adicione mais cores
+];
+```
+
+### **📱 Responsividade**
+
+O aplicativo é otimizado para todos os dispositivos:
+- **🖥️ Desktop:** 1200px+
+- **💻 Laptop:** 768px - 1199px  
+- **📱 Tablet:** 481px - 767px
+- **📱 Mobile:** até 480px
+
+### **🔧 Adicionando Novos Tipos de Post**
+
+1. **Atualize o tipo `PostType`** em `src/types/Post.ts`:
+```typescript
+export type PostType = 'poem' | 'story' | 'song' | 'thought' | 'philosophy' | 'newtype';
+```
+
+2. **Adicione o label** na função `getPostTypeLabel` em `AdminDashboard.tsx`:
+```typescript
+const labels = {
+  // ... existentes
+  newtype: 'Novo Tipo'
+};
+```
+
+3. **Crie renderizadores específicos** se necessário
+
+## 🏗️ Build e Deploy
+
+### **📦 Build para Produção**
 
 ```bash
+# Gerar build otimizada
 npm run build
+
+# Preview da build
+npm run preview
 ```
 
 Os arquivos otimizados serão gerados na pasta `dist/`.
 
-## 📱 Responsividade
+### **🚀 Deploy Sugestões**
 
-O aplicativo é totalmente responsivo e funciona em:
-- 🖥️ Desktop (1200px+)
-- 💻 Laptop (768px - 1199px)
-- 📱 Tablet (481px - 767px)
-- 📱 Mobile (até 480px)
+- **Netlify:** Ideal para SPAs React
+- **Vercel:** Excelente integração com Vite
+- **GitHub Pages:** Para projetos open source
+- **Firebase Hosting:** Para projetos que evoluirão para backend
+
+### **⚙️ Configurações de Deploy**
+
+Para SPAs, configure redirects para `index.html`:
+
+**Netlify** (`public/_redirects`):
+```
+/*    /index.html   200
+```
+
+**Vercel** (`vercel.json`):
+```json
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+```
 
 ## 🔄 Fluxo de Dados
 
-1. **Carregamento inicial:** Posts são carregados do `public/posts.json`
-2. **Modificações:** Alterações são salvas no `localStorage`
-3. **Persistência:** Dados persistem entre sessões do navegador
-4. **Backup:** Export/import para transferência entre dispositivos
+### **📊 Arquitetura de Dados**
 
-## 🛡️ Segurança
+```
+graph TD
+    A[📄 public/posts.json] --> B[🔧 PostService]
+    B --> C[💾 localStorage]
+    C --> B
+    B --> D[🪝 usePosts Hook]
+    D --> E[⚛️ React Components]
+    E --> F[👤 User Interface]
+    F --> E
+    E --> D
+    D --> B
+```
 
-- **Autenticação simples** para área administrativa
-- **Rotas protegidas** com `ProtectedRoute`
-- **Validação de dados** nos formulários
-- **Sanitização** de entradas do usuário
+### **🔄 Fluxo de Operações**
 
-## 🤝 Contribuindo
+1. **📖 Carregamento inicial:** Posts carregados de `public/posts.json`
+2. **💾 Cache local:** Dados salvos em `localStorage` para modificações
+3. **🔄 Operações CRUD:** Todas as mudanças persistidas localmente
+4. **💼 Backup:** Export/import para transferência entre dispositivos
+5. **🎯 Estado reativo:** Interface atualizada automaticamente
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+## 🛡️ Segurança e Validação
+
+### **🔐 Autenticação**
+- Sistema simples baseado em Context API
+- Session persistente via localStorage
+- Rotas protegidas com ProtectedRoute HOC
+- Logout automático ao fechar navegador (opcional)
+
+### **✅ Validação de Dados**
+- Validação de formulários em tempo real
+- Sanitização de entradas do usuário
+- Verificação de integridade dos dados JSON
+- Tratamento de erros robusto
+
+### **🛡️ Boas Práticas Implementadas**
+- Tipagem forte com TypeScript
+- Separação de responsabilidades
+- Error boundaries para componentes
+- Código limpo e documentado
+
+## 🧪 Desenvolvimento e Testes
+
+### **🔧 Desenvolvimento Local**
+
+```bash
+# Instalar dependências
+npm install
+
+# Executar em modo desenvolvimento
+npm run dev
+
+# Build e preview
+npm run build && npm run preview
+```
+
+### **📝 Estrutura de Commits**
+
+Seguimos convenções de commit semântico:
+- `feat:` Nova funcionalidade
+- `fix:` Correção de bug
+- `docs:` Documentação
+- `style:` Formatação de código
+- `refactor:` Refatoração
+- `test:` Testes
+- `chore:` Tarefas de manutenção
+
+### **🔍 Linting e Formatação**
+
+```bash
+# Verificar problemas de lint
+npm run lint
+
+# Configuração ESLint personalizada
+eslint.config.js
+```
+
+## 🤝 Contribuição
+
+### **🛠️ Como Contribuir**
+
+1. **🍴 Fork** o projeto
+2. **🌿 Crie** uma branch para sua feature:
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **💾 Commit** suas mudanças:
+   ```bash
+   git commit -m 'feat: add amazing feature'
+   ```
+4. **📤 Push** para a branch:
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. **🔀 Abra** um Pull Request
+
+### **📋 Guidelines de Contribuição**
+
+- **✅ Código limpo** e bem documentado
+- **📝 Commits semânticos** descritivos
+- **🧪 Testes** para novas funcionalidades
+- **📖 Documentação** atualizada
+- **🎨 Seguir** padrões de design existentes
+
+### **🐛 Reportando Bugs**
+
+Use as [GitHub Issues](https://github.com/icastelito/castelo-de-areia/issues) com:
+- **📝 Descrição detalhada** do problema
+- **🔄 Passos** para reproduzir
+- **🖥️ Ambiente** (OS, navegador, versão)
+- **📸 Screenshots** se aplicável
+
+## 🗺️ Roadmap
+
+### **🚧 Próximas Funcionalidades**
+
+- [ ] **🔍 Busca avançada** com filtros múltiplos
+- [ ] **📊 Analytics** de visualizações de posts
+- [ ] **💬 Sistema de comentários** 
+- [ ] **📤 Compartilhamento** em redes sociais
+- [ ] **🔊 Text-to-speech** para poemas
+- [ ] **📱 Progressive Web App** (PWA)
+- [ ] **🌐 Internacionalização** (i18n)
+- [ ] **🎵 Player de áudio** para músicas
+- [ ] **📚 Categorias hierárquicas**
+- [ ] **🔐 Autenticação com OAuth**
+
+### **🔧 Melhorias Técnicas**
+
+- [ ] **⚡ Server-Side Rendering** (SSR)
+- [ ] **💾 Banco de dados** real (PostgreSQL/MongoDB)
+- [ ] **🔄 API REST** completa
+- [ ] **🧪 Testes unitários** abrangentes
+- [ ] **📊 Performance monitoring**
+- [ ] **🔒 Segurança** aprimorada
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
-## 🎭 Autor
+```
+MIT License
+
+Copyright (c) 2025 Ícaro Castelo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+```
+
+## 👨‍💻 Autor
 
 **Ícaro Castelo**
-- GitHub: [@icastelito](https://github.com/icastelito)
+- 🌐 **GitHub:** [@icastelito](https://github.com/icastelito)
+- 📧 **Email:** [i.castelobp@gmail.com](mailto:i.castelobp@gmail.com)
+- 💼 **LinkedIn:** [Icaro Castelo](https://www.linkedin.com/in/icastelob/)
+
+
+## 📚 Recursos Adicionais
+
+### **📖 Documentação**
+- [React Documentation](https://react.dev/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Vite Guide](https://vitejs.dev/guide/)
+- [React Router](https://reactrouter.com/)
+
+### **🎨 Design Resources**
+- [Y2K Aesthetic Guide](https://y2kaesthetic.com/)
+- [Glass Morphism Generator](https://glassmorphism.com/)
+- [Neon Color Palettes](https://colorhunt.co/palettes/neon)
+
+### **🛠️ Tools**
+- [React Developer Tools](https://react.dev/learn/react-developer-tools)
+- [TypeScript Playground](https://www.typescriptlang.org/play)
+- [VS Code Extensions](https://code.visualstudio.com/docs/editor/extension-marketplace)
 
 ---
 
-*"Palavras são areia que o vento leva, mas algumas conseguem construir castelos que resistem ao tempo."*
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<div align="center">
+
+**🏰 Castelo de Areia**
+
+
+[![⭐ Star this repo](https://img.shields.io/github/stars/icastelito/castelo-de-areia?style=social)](https://github.com/icastelito/castelo-de-areia)
+[![🍴 Fork this repo](https://img.shields.io/github/forks/icastelito/castelo-de-areia?style=social)](https://github.com/icastelito/castelo-de-areia/fork)
+[![👀 Watch this repo](https://img.shields.io/github/watchers/icastelito/castelo-de-areia?style=social)](https://github.com/icastelito/castelo-de-areia)
+
+**Feito com ❤️ e ☕ por [Ícaro Castelo](https://github.com/icastelito)**
+
