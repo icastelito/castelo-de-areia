@@ -139,20 +139,20 @@
   background-size: 50px 50px;
 }
 
-/* Scroll Bar Y2K Style */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background: var(--accent-primary);
+  background: transparent;
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-secondary);
+  background: transparent;
 }
