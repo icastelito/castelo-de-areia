@@ -16,17 +16,23 @@ export const FloatingElements: React.FC = () => {
     const colors = [
       'var(--accent-primary)',
       'var(--accent-secondary)', 
-      '#00ffff',
+         '#00ffff',
       '#ff006e',
       '#39ff14',
-      '#8338ec'
+      '#8338ec',
+      '#ff4757',  // Vermelho neon
+      '#ffa726',  // Laranja neon
+      '#ab47bc',  // Roxo claro
+      '#26c6da',  // Cyan claro
+      '#66bb6a',  // Verde claro
+      '#ff7043'   // Coral neon
     ];
 
     const newElements: FloatingElement[] = Array.from({ length: 15 }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
       delay: Math.random() * 10,
-      size: Math.random() * 4 + 2,
+      size: Math.random() * 4 + Math.random() * 2 + 2,
       color: colors[Math.floor(Math.random() * colors.length)]
     }));
 

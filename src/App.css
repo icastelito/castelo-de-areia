@@ -91,7 +91,7 @@ width: 100dvw;
 
 .back-button {
   background: var(--accent-primary) !important;
-  color: white;
+  color: var(--font-primary);
   border: none;
   padding: 1rem 2rem;
   border-radius: 25px;

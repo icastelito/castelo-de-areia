@@ -45,6 +45,8 @@
 
 .post-type {
   color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
+  backdrop-filter: var(--backdrop-blur);
   padding: 0.5rem 1rem;
   border-radius: 25px;
   font-size: 0.9rem;
@@ -75,7 +77,7 @@
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
   padding: 0.3rem 0.8rem;
   border-radius: 15px;
   border: 1px solid var(--border-glass);
@@ -118,7 +120,7 @@
 }
 
 .post-tag {
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
   color: var(--text-accent);
   padding: 0.4rem 1rem;
   border-radius: 20px;
@@ -135,7 +137,7 @@
 }
 
 .post-tag-more {
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
   color: var(--text-secondary);
   padding: 0.4rem 1rem;
   border-radius: 20px;
@@ -192,7 +194,6 @@
   
   .post-title {
     font-family: 'Philosopher', serif;
-    font-size: 1.4rem;
   }
   
   .post-excerpt {

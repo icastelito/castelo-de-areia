@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import type { PostPreview } from '../../types/Post';
 import './PostCard.css';
 
 interface PostCardProps {
   post: PostPreview;
-  onClick: (id: string) => void;
+  onClick?: (id: string) => void;
+  linkTo?: string;
 }
 
 const getPostTypeLabel = (type: string): string => {
@@ -18,12 +20,9 @@ const getPostTypeLabel = (type: string): string => {
   return labels[type as keyof typeof labels] || type;
 };
 
-export const PostCard: React.FC<PostCardProps> = ({ post, onClick }) => {
-  return (
-    <article 
-      className="post-card"
-      onClick={() => onClick(post.id)}
-    >
+export const PostCard: React.FC<PostCardProps> = ({ post, onClick, linkTo }) => {
+  const cardContent = (
+    <>
       <div className="post-card-header">
         <span className="post-type">{getPostTypeLabel(post.type)}</span>
         <time className="post-date">
@@ -53,6 +52,23 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onClick }) => {
       <div className="post-card-footer">
         <span className="read-more">Ler mais →</span>
       </div>
+    </>
+  );
+
+  if (linkTo) {
+    return (
+      <Link to={linkTo} className="post-card">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <article 
+      className="post-card"
+      onClick={() => onClick?.(post.id)}
+    >
+      {cardContent}
     </article>
   );
 };

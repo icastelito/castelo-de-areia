@@ -1,0 +1,45 @@
+[
+  {
+    "id": "1",
+    "title": "Soneto perdido entre cachos vermelhos",
+    "type": "poem",
+    "content": "Não sei onde andam meus pensamentos\nOs perdi em meio a teus cachos rubros\nUm rio de brasas rompendo o escuro\nDa solidão que me priva de um acalento\n\nNão te desejo por um mero momento\nPois é em meus desejos que te descubro\nEm meus versos escondo alguns sussurros\nDe um ardor que já te espera há tempos\n\nTempo que insiste em ser arrastado\nPara que deuses loucos possam desfrutar\nDo nosso anseio que os deixa embriagados\n\nCom medo do toque entre o céu e o mar\nNão desejam ver um beijo incendiado\nInvejosos que não deixarei nos atrapalhar",
+    "declamation": "",
+    "author": "Icaro Castelo",
+    "date": "2025-08-13T12:00:00.000Z",
+    "tags": ["amor", "poesia", "soneto", "cachos"],
+    "excerpt": "Não sei onde andam meus pensamentos / Os perdi em meio a teus cachos rubros...",
+    "metadata": {
+      "verses": 14,
+      "stanzas": 4
+    }
+  },
+  {
+    "id": "2",
+    "title": "Museu de ti",
+    "type": "poem",
+    "content": "Meus pensamentos podem até me pertencer,\nmas, em cada quadro deles,\no que reside é uma pintura de você.\n\nUm museu das tuas curvas,\ndos teus risos,\nda tua cintura,\ndo teu olhar,\nda tua doçura.\n\nÉ você,\nimpressa, esculpida, desenhada, descrita\nna minha mente toda.\nEm cada canto, em cada esquina,\nsó registros de ti.",
+    "author": "Icaro Castelo",
+    "date": "2025-07-04T12:00:00.000Z",
+    "tags": ["museu", "memória", "recomeço"],
+    "excerpt": "Meus pensamentos podem até me pertencer, mas, em cada quadro deles, o que reside é uma pintura de você.",
+    "metadata": {
+      "verses": 13,
+      "stanzas": 3
+    }
+  },
+  {
+    "id": "3",
+    "title": "Musa",
+    "type": "poem",
+    "content": "Tu me atiça poesia,\npreenche meus pensamentos\ncom simples palavras do dia a dia.\n\nTu me inspiras música,\nquando eu já esqueci o ritmo e a melodia.\nTua lembrança acelera o batuque do meu coração.\n\nTu me respiras literatura,\nquando minha mente perde o fio.\nSão tuas palavras que me guiam\nde volta pra aventura.\n\nTu me transpires arte,\nporque teu sorriso me invade\nsempre que te vejo, minha musa.",
+    "author": "Icaro Castelo",
+    "date": "2025-08-10T12:00:00.000Z",
+    "tags": ["musa", "melodia", "arte", "inspiração"],
+    "excerpt": "Tu me atiça poesia, preenche meus pensamentos com simples palavras do dia a dia...",
+    "metadata": {
+      "verses": 13,
+      "stanzas": 4
+    }
+  }
+]

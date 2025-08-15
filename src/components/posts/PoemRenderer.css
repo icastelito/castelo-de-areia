@@ -69,7 +69,7 @@
   font-style: italic;
   color: var(--text-secondary);
   font-weight: 500;
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
   padding: 0.5rem 1rem;
   border-radius: 15px;
   border: 1px solid var(--border-glass);
@@ -78,7 +78,7 @@
 .poem-date {
   color: var(--text-secondary);
   font-weight: 500;
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
   padding: 0.5rem 1rem;
   border-radius: 15px;
   border: 1px solid var(--border-glass);
@@ -94,7 +94,7 @@
 }
 
 .poem-tag {
-  color: white;
+  color: var(--font-primary);
   padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -185,7 +185,7 @@
   font-size: 1rem;
   font-style: italic;
   font-weight: 500;
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
   padding: 0.5rem 1.2rem;
   border-radius: 20px;
   border: 1px solid var(--border-glass);

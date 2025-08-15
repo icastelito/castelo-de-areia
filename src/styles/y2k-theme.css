@@ -5,10 +5,20 @@
   --bg-secondary: rgba(255, 255, 255, 0.85);
   --bg-card: rgba(255, 255, 255, 0.7);
   --bg-glass: rgba(255, 255, 255, 0.25);
-  
+
+--bg-glass-shadow-glow: rgba(255, 20, 147, 0.1);
+--bg-glass-shadow-neon: rgba(0, 191, 255, 0.1);
+
   --text-primary: #2a2a2a;
   --text-secondary: #666666;
   --text-accent: #ff006e;
+  
+  /* Neon Colors */
+  --neon-pink: #ff1493;
+  --neon-cyan: #00bfff;
+  --neon-green: #39ff14;
+  --neon-purple: #8a2be2;
+  --neon-red: #ff4757;
   
   --accent-primary: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
   --accent-secondary: linear-gradient(45deg, #06ffa5, #00d4ff, #ff006e);
@@ -31,6 +41,13 @@
   --text-secondary: #b0b0b0;
   --text-accent: #00ffff;
   
+  /* Neon Colors */
+  --neon-pink: #ff1493;
+  --neon-cyan: #00bfff;
+  --neon-green: #39ff14;
+  --neon-purple: #8a2be2;
+  --neon-red: #ff4757;
+  
   --accent-primary: linear-gradient(45deg, #00ffff, #ff006e, #8338ec);
   --accent-secondary: linear-gradient(45deg, #39ff14, #00ffff, #ff006e);
   
@@ -38,12 +55,12 @@
   --shadow-glow: 0 8px 32px rgba(0, 255, 255, 0.3);
   --shadow-neon: 0 0 20px rgba(0, 255, 255, 0.6);
   
-  --backdrop-blur: blur(20px);
+  --backdrop-blur: blur(2.5px);
 }
 
 /* Y2K Glass Morphism Base */
 .glass-morphism {
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, #00bfff1a 100%);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
   border: 1px solid var(--border-glass);
@@ -133,7 +150,9 @@
 
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
+  background: var(--accent-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
 }
