@@ -195,8 +195,7 @@
 
 @media (max-width: 768px) {
   .poem-container {
-    margin: 1rem;
-    padding: 2rem 1.5rem;
+    width: 85dvw;
   }
   
   .poem-title {

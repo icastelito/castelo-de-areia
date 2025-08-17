@@ -43,7 +43,7 @@ width: 100dvw;
 .main-content {
   flex: 1;
   padding: 2rem;
-  width: 70%;
+  width: 70dvw;
   position: relative;
   z-index: 2;
   align-self: center;
@@ -237,8 +237,11 @@ width: 100dvw;
 @media (max-width: 768px) {
   .main-content {
     padding: 1rem;
+  width: 95dvw;
   }
   
+
+
   .posts-container {
     grid-template-columns: 1fr;
     gap: 1.5rem;
