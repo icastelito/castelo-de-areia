@@ -47,7 +47,7 @@ width: 100dvw;
   position: relative;
   z-index: 2;
   align-self: center;
-  
+
 }
 
 .posts-grid {
@@ -238,7 +238,7 @@ width: 100dvw;
 @media (max-width: 768px) {
   .main-content {
     padding: 1rem;
-  width: 90dvw;
+  width: 100dvw;
   }
   
 
