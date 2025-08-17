@@ -46,6 +46,7 @@ width: 100dvw;
   width: 70dvw;
   position: relative;
   z-index: 2;
+  align-self: center;
   
 }
 
