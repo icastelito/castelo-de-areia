@@ -1,45 +1,33 @@
 import type { Post, PostType } from '../types/Post';
 
 class PostService {
-  private posts: Post[] = [];
-  private readonly storageKey = 'posts-data';
+  private readonly baseUrl = import.meta.env.DEV ? 'http://localhost:3001' : '';
 
-  constructor() {
-    this.loadPosts();
-  }
-
-  // Carrega posts do localStorage ou arquivo JSON
-  private async loadPosts(): Promise<void> {
+  // Verifica se está em desenvolvimento e se a API está disponível
+  private async isApiAvailable(): Promise<boolean> {
+    if (!import.meta.env.DEV) return false;
+    
     try {
-      // Primeiro tenta carregar do localStorage
-      const storedPosts = localStorage.getItem(this.storageKey);
-      if (storedPosts) {
-        this.posts = JSON.parse(storedPosts).map((post: any) => ({
-          ...post,
-          date: new Date(post.date)
-        }));
-        return;
-      }
-
-      // Se não tem no localStorage, carrega do arquivo JSON
-      const response = await fetch('/posts.json');
-      const data = await response.json();
-      this.posts = data.map((post: any) => ({
-        ...post,
-        date: new Date(post.date)
-      }));
-      
-      // Salva no localStorage para futuras modificações
-      this.savePosts();
-    } catch (error) {
-      console.error('Erro ao carregar posts:', error);
-      this.posts = [];
+      const response = await fetch(`${this.baseUrl}/posts`);
+      return response.ok;
+    } catch {
+      return false;
     }
   }
 
-  // Salva posts no localStorage
-  private savePosts(): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
+  // Fallback para carregar do arquivo estático quando a API não está disponível
+  private async loadFromStaticFile(): Promise<Post[]> {
+    try {
+      const response = await fetch('/posts.json');
+      const data = await response.json();
+      return (data.posts || data).map((post: any) => ({
+        ...post,
+        date: new Date(post.date)
+      }));
+    } catch (error) {
+      console.error('Erro ao carregar posts do arquivo estático:', error);
+      return [];
+    }
   }
 
   // Gera um novo ID único
@@ -50,17 +38,44 @@ class PostService {
   // Métodos públicos do CRUD
   
   async getAllPosts(): Promise<Post[]> {
-    if (this.posts.length === 0) {
-      await this.loadPosts();
+    const apiAvailable = await this.isApiAvailable();
+    
+    if (apiAvailable) {
+      try {
+        const response = await fetch(`${this.baseUrl}/posts`);
+        const data = await response.json();
+        return data.map((post: any) => ({
+          ...post,
+          date: new Date(post.date)
+        })).sort((a: Post, b: Post) => b.date.getTime() - a.date.getTime());
+      } catch (error) {
+        console.error('Erro ao carregar posts da API:', error);
+      }
     }
-    return [...this.posts].sort((a, b) => b.date.getTime() - a.date.getTime());
+    
+    return this.loadFromStaticFile();
   }
 
   async getPostById(id: string): Promise<Post | undefined> {
-    if (this.posts.length === 0) {
-      await this.loadPosts();
+    const apiAvailable = await this.isApiAvailable();
+    
+    if (apiAvailable) {
+      try {
+        const response = await fetch(`${this.baseUrl}/posts/${id}`);
+        if (response.ok) {
+          const post = await response.json();
+          return {
+            ...post,
+            date: new Date(post.date)
+          };
+        }
+      } catch (error) {
+        console.error('Erro ao buscar post da API:', error);
+      }
     }
-    return this.posts.find(post => post.id === id);
+    
+    const allPosts = await this.loadFromStaticFile();
+    return allPosts.find(post => post.id === id);
   }
 
   async getPostsByType(type: PostType): Promise<Post[]> {
@@ -80,35 +95,80 @@ class PostService {
       date: new Date()
     };
 
-    this.posts.push(newPost);
-    this.savePosts();
-    return newPost;
+    const apiAvailable = await this.isApiAvailable();
+    
+    if (apiAvailable) {
+      try {
+        const response = await fetch(`${this.baseUrl}/posts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newPost),
+        });
+        
+        if (response.ok) {
+          const createdPost = await response.json();
+          return {
+            ...createdPost,
+            date: new Date(createdPost.date)
+          };
+        }
+      } catch (error) {
+        console.error('Erro ao criar post na API:', error);
+      }
+    }
+    
+    // Fallback: não faz nada em produção se a API não estiver disponível
+    throw new Error('API não disponível para criação de posts');
   }
 
   async updatePost(id: string, postData: Partial<Omit<Post, 'id' | 'date'>>): Promise<Post | null> {
-    const postIndex = this.posts.findIndex(post => post.id === id);
-    if (postIndex === -1) {
-      return null;
+    const apiAvailable = await this.isApiAvailable();
+    
+    if (apiAvailable) {
+      try {
+        const response = await fetch(`${this.baseUrl}/posts/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(postData),
+        });
+        
+        if (response.ok) {
+          const updatedPost = await response.json();
+          return {
+            ...updatedPost,
+            date: new Date(updatedPost.date)
+          };
+        }
+      } catch (error) {
+        console.error('Erro ao atualizar post na API:', error);
+      }
     }
-
-    this.posts[postIndex] = {
-      ...this.posts[postIndex],
-      ...postData
-    };
-
-    this.savePosts();
-    return this.posts[postIndex];
+    
+    // Fallback: não faz nada em produção se a API não estiver disponível
+    throw new Error('API não disponível para atualização de posts');
   }
 
   async deletePost(id: string): Promise<boolean> {
-    const postIndex = this.posts.findIndex(post => post.id === id);
-    if (postIndex === -1) {
-      return false;
+    const apiAvailable = await this.isApiAvailable();
+    
+    if (apiAvailable) {
+      try {
+        const response = await fetch(`${this.baseUrl}/posts/${id}`, {
+          method: 'DELETE',
+        });
+        
+        return response.ok;
+      } catch (error) {
+        console.error('Erro ao deletar post na API:', error);
+      }
     }
-
-    this.posts.splice(postIndex, 1);
-    this.savePosts();
-    return true;
+    
+    // Fallback: não faz nada em produção se a API não estiver disponível
+    throw new Error('API não disponível para exclusão de posts');
   }
 
   // Métodos utilitários
@@ -132,24 +192,14 @@ class PostService {
   }
 
   // Método para exportar dados (backup)
-  exportPosts(): string {
-    return JSON.stringify(this.posts, null, 2);
+  async exportPosts(): Promise<string> {
+    const allPosts = await this.getAllPosts();
+    return JSON.stringify(allPosts, null, 2);
   }
 
-  // Método para importar dados
-  async importPosts(jsonData: string): Promise<boolean> {
-    try {
-      const importedPosts = JSON.parse(jsonData);
-      this.posts = importedPosts.map((post: any) => ({
-        ...post,
-        date: new Date(post.date)
-      }));
-      this.savePosts();
-      return true;
-    } catch (error) {
-      console.error('Erro ao importar posts:', error);
-      return false;
-    }
+  // Método para verificar se as operações de escrita estão disponíveis
+  async isWriteAvailable(): Promise<boolean> {
+    return import.meta.env.DEV && await this.isApiAvailable();
   }
 }
 

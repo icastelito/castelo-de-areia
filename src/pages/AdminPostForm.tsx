@@ -24,7 +24,7 @@ interface PostFormData {
 export const AdminPostForm = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { createPost, updatePost, getPostById } = usePosts();
+  const { createPost, updatePost, getPostById, isWriteAvailable } = usePosts();
   const isEditing = Boolean(id);
 
   const [formData, setFormData] = useState<PostFormData>({
@@ -396,13 +396,21 @@ export const AdminPostForm = () => {
         </div>
 
         <div className="form-actions">
+          {!isWriteAvailable && (
+            <div className="write-warning" style={{ marginBottom: '1rem', padding: '1rem', backgroundColor: 'rgba(255, 193, 7, 0.1)', border: '1px solid #ffc107', borderRadius: '8px' }}>
+              <p style={{ margin: 0, color: '#ffc107' }}>
+                <strong>Aviso:</strong> A API de desenvolvimento não está disponível. Não é possível salvar alterações.
+              </p>
+            </div>
+          )}
           <Link to="/admin" className="y2k-button secondary">
             Cancelar
           </Link>
           <button 
             type="submit" 
-            disabled={loading}
+            disabled={loading || !isWriteAvailable}
             className="y2k-button primary"
+            style={!isWriteAvailable ? { opacity: 0.6 } : {}}
           >
             {loading ? 'Salvando...' : (isEditing ? 'Atualizar' : 'Criar Post')}
           </button>

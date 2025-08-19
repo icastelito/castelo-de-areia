@@ -7,6 +7,7 @@ import { AdminLoginPage } from './pages/AdminLoginPage';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminPostForm } from './pages/AdminPostForm';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { DevOnlyRoute } from './components/auth/DevOnlyRoute';
 import { NotFoundPage } from './pages/NotFoundPage';
 import './styles/y2k-theme.css';
 import './App.css';
@@ -19,21 +20,31 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="post/:id" element={<PostPage />} />
-            <Route path="admin/login" element={<AdminLoginPage />} />
+            <Route path="admin/login" element={
+              <DevOnlyRoute>
+                <AdminLoginPage />
+              </DevOnlyRoute>
+            } />
             <Route path="admin" element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
+              <DevOnlyRoute>
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              </DevOnlyRoute>
             } />
             <Route path="admin/create" element={
-              <ProtectedRoute>
-                <AdminPostForm />
-              </ProtectedRoute>
+              <DevOnlyRoute>
+                <ProtectedRoute>
+                  <AdminPostForm />
+                </ProtectedRoute>
+              </DevOnlyRoute>
             } />
             <Route path="admin/edit/:id" element={
-              <ProtectedRoute>
-                <AdminPostForm />
-              </ProtectedRoute>
+              <DevOnlyRoute>
+                <ProtectedRoute>
+                  <AdminPostForm />
+                </ProtectedRoute>
+              </DevOnlyRoute>
             } />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

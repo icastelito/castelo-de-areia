@@ -56,10 +56,10 @@ Um blog pessoal para compartilhar poesias, contos, músicas e reflexões, constr
 - **Type-safe** em toda a aplicação
 
 ### **💾 Persistência de Dados**
-- **LocalStorage** como storage primário
-- **JSON File** como fallback e dados iniciais
-- **Sistema híbrido** para máxima flexibilidade
-- **Export/Import** para backup e migração
+- **🔄 Fake API** (desenvolvimento) usando JSON Server
+- **📁 JSON File** como fallback para produção
+- **🛡️ Sistema híbrido** com detecção automática de ambiente
+- **📤 Export/Import** para backup e migração
 
 ## 📁 Estrutura do Projeto
 
@@ -156,8 +156,14 @@ npm run dev
 ### **📜 Scripts Disponíveis**
 
 ```bash
-# Desenvolvimento com hot reload
+# Desenvolvimento com hot reload (apenas frontend)
 npm run dev
+
+# Desenvolvimento completo com fake API
+npm run dev:full
+
+# Executa apenas o JSON Server (fake API)
+npm run json-server
 
 # Build para produção
 npm run build
@@ -169,14 +175,48 @@ npm run preview
 npm run lint
 ```
 
+## 🌍 Ambientes de Execução
+
+### **🔧 Desenvolvimento**
+Em ambiente de desenvolvimento, use `npm run dev:full` para ter acesso completo à funcionalidades de CRUD:
+
+```bash
+npm run dev:full
+```
+
+Isso inicia:
+- **📡 JSON Server** na porta 3001 (fake API)
+- **⚡ Vite dev server** na porta 5173 (frontend)
+
+**🔗 URLs disponíveis:**
+- 🌐 **Frontend:** `http://localhost:5173`
+- 📡 **API:** `http://localhost:3001/posts`  
+- 🔐 **Admin:** `http://localhost:5173/admin/login`
+
+### **🚀 Produção**
+Em produção, a área administrativa é **automaticamente desabilitada** e os dados são servidos estaticamente do arquivo `posts.json`.
+
+```bash
+npm run build
+npm run preview
+```
+
 ## 🔐 Acesso Administrativo
 
-### **🗝️ Credenciais de Acesso**
+### **⚠️ Disponibilidade**
+A área administrativa está disponível **apenas em ambiente de desenvolvimento**. Em produção, todas as rotas de admin redirecionam automaticamente para a página inicial.
+
+### **🗝️ Credenciais de Acesso (Desenvolvimento)**
 - **👤 Usuário:** `admin`
 - **🔒 Senha:** `castelo123`
 
+### **🔧 Como Acessar**
+1. **Execute o ambiente completo:** `npm run dev:full`
+2. **Acesse:** `http://localhost:5173/admin/login`
+3. **Faça login** com as credenciais acima
+
 ### **⚠️ Segurança**
-> **Importante:** Em ambiente de produção, altere as credenciais no arquivo `src/contexts/AuthContext.tsx`
+> **Importante:** As credenciais estão definidas em `src/contexts/AuthContext.tsx`. Para uso real, implemente autenticação adequada.
 
 ### **🛡️ Funcionalidades Administrativas**
 - Dashboard com estatísticas em tempo real
@@ -353,11 +393,15 @@ graph TD
 
 ### **🔄 Fluxo de Operações**
 
-1. **📖 Carregamento inicial:** Posts carregados de `public/posts.json`
-2. **💾 Cache local:** Dados salvos em `localStorage` para modificações
-3. **🔄 Operações CRUD:** Todas as mudanças persistidas localmente
-4. **💼 Backup:** Export/import para transferência entre dispositivos
-5. **🎯 Estado reativo:** Interface atualizada automaticamente
+1. **📖 Carregamento inicial:** 
+   - **Desenvolvimento:** Carrega da fake API (JSON Server)
+   - **Produção:** Carrega do arquivo estático `posts.json`
+2. **� Operações CRUD:** 
+   - **Desenvolvimento:** Todas as operações via fake API
+   - **Produção:** Apenas leitura (write operations desabilitadas)
+3. **� Persistência:** Dados salvos na fake API durante desenvolvimento
+4. **💼 Backup:** Export sempre disponível para backup dos dados
+5. **🎯 Estado reativo:** Interface atualizada automaticamente via hooks
 
 ## 🛡️ Segurança e Validação
 

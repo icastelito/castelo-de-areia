@@ -6,11 +6,9 @@ import './AdminDashboard.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export const AdminDashboard = () => {
-  const { posts, loading, error, deletePost, refreshPosts } = usePosts();
+  const { posts, loading, error, isWriteAvailable, deletePost, refreshPosts } = usePosts();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
   const [showExportModal, setShowExportModal] = useState(false);
-  const [showImportModal, setShowImportModal] = useState(false);
-  const [importData, setImportData] = useState('');
 
   const handleDelete = async (id: string) => {
     try {
@@ -21,34 +19,21 @@ export const AdminDashboard = () => {
     }
   };
 
-  const handleExport = () => {
-    const data = postService.exportPosts();
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `posts-backup-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    setShowExportModal(false);
-  };
-
-  const handleImport = async () => {
+  const handleExport = async () => {
     try {
-      const success = await postService.importPosts(importData);
-      if (success) {
-        refreshPosts();
-        setShowImportModal(false);
-        setImportData('');
-        alert('Posts importados com sucesso!');
-      } else {
-        alert('Erro ao importar posts. Verifique o formato do arquivo.');
-      }
+      const data = await postService.exportPosts();
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `posts-backup-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setShowExportModal(false);
     } catch (err) {
-      console.error('Erro ao importar:', err);
-      alert('Erro ao importar posts.');
+      console.error('Erro ao exportar:', err);
     }
   };
 
@@ -102,8 +87,17 @@ export const AdminDashboard = () => {
         </section>
 
         <section className="dashboard-actions">
+          {!isWriteAvailable && (
+            <div className="write-warning">
+              <p><strong>Aviso:</strong> A API de desenvolvimento não está disponível. Operações de criação, edição e exclusão estão desabilitadas.</p>
+            </div>
+          )}
           <div className="action-buttons">
-            <Link to="/admin/create" className="y2k-button primary">
+            <Link 
+              to="/admin/create" 
+              className={`y2k-button primary ${!isWriteAvailable ? 'disabled' : ''}`}
+              style={!isWriteAvailable ? { pointerEvents: 'none', opacity: 0.6 } : {}}
+            >
                Criar Novo Post
             </Link>
             <button 
@@ -111,12 +105,6 @@ export const AdminDashboard = () => {
               className="y2k-button secondary"
             >
               Exportar Posts
-            </button>
-            <button 
-              onClick={() => setShowImportModal(true)}
-              className="y2k-button secondary"
-            >
-               Importar Posts
             </button>
           </div>
         </section>
@@ -152,13 +140,16 @@ export const AdminDashboard = () => {
                         <div className="action-buttons-row">
                           <Link 
                             to={`/admin/edit/${post.id}`}
-                            className="action-button edit"
+                            className={`action-button edit ${!isWriteAvailable ? 'disabled' : ''}`}
+                            style={!isWriteAvailable ? { pointerEvents: 'none', opacity: 0.6 } : {}}
                           >
                             <FaEdit />
                           </Link>
                           <button 
                             onClick={() => setShowDeleteConfirm(post.id)}
                             className="action-button delete"
+                            disabled={!isWriteAvailable}
+                            style={!isWriteAvailable ? { opacity: 0.6 } : {}}
                           >
                             <FaTrash />
                           </button>
@@ -223,40 +214,6 @@ export const AdminDashboard = () => {
                 className="y2k-button primary"
               >
                 Baixar Backup
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modal de importação */}
-      {showImportModal && (
-        <div className="modal-overlay">
-          <div className="import-modal glass-morphism">
-            <h3>Importar Posts</h3>
-            <p>Cole o conteúdo JSON dos posts para importar:</p>
-            <textarea
-              value={importData}
-              onChange={(e) => setImportData(e.target.value)}
-              placeholder="Cole aqui o JSON dos posts..."
-              rows={10}
-            />
-            <div className="modal-actions">
-              <button 
-                onClick={() => {
-                  setShowImportModal(false);
-                  setImportData('');
-                }}
-                className="y2k-button secondary"
-              >
-                Cancelar
-              </button>
-              <button 
-                onClick={handleImport}
-                className="y2k-button primary"
-                disabled={!importData.trim()}
-              >
-                Importar
               </button>
             </div>
           </div>
