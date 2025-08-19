@@ -6,7 +6,7 @@ import './AdminDashboard.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export const AdminDashboard = () => {
-  const { posts, loading, error, isWriteAvailable, deletePost, refreshPosts } = usePosts();
+  const { posts, loading, error, isWriteAvailable, deletePost } = usePosts();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
   const [showExportModal, setShowExportModal] = useState(false);
 
